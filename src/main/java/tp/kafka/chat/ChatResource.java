@@ -7,6 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,7 @@ public class ChatResource {
     private KafkaAdapter kafka;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public void sendMessage(@CookieValue(value = "username") String username, @RequestBody String msg)
+    public void sendMessage(@RequestHeader("username") String username, @RequestBody String msg)
             throws InterruptedException, ExecutionException {
         var chatMessage = new ChatMessage(username, msg);
         kafka.sendChatMessage(chatMessage);
