@@ -22,14 +22,13 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/chat")
 public class ChatResource {
 
-    private KafkaTemplate<Object, ChatMessage> kafka;
+    private KafkaAdapter kafka;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public void sendMessage(@CookieValue(value = "username") String username, @RequestBody String msg)
             throws InterruptedException, ExecutionException {
         var chatMessage = new ChatMessage(username, msg);
-        var result = kafka.send("chat", chatMessage);
+        kafka.sendChatMessage(chatMessage);
         ChatResource.log.info(chatMessage);
-        result.get();
     }
 }
