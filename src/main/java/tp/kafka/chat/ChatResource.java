@@ -7,6 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @AllArgsConstructor
 @Log4j2
+@RequestMapping("/chat")
 public class ChatResource {
 
     private KafkaTemplate<Object, ChatMessage> kafka;
