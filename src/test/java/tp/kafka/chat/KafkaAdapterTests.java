@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,7 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 
 @SpringBootTest
 @EmbeddedKafka(topics = "chat", bootstrapServersProperty = "spring.kafka.properties.bootstrap.servers")
+@Disabled("Diesen Test brauchen wir erst im späteren Verlauf der Übung")
 class KafkaAdapterTests {
 
     @Autowired
