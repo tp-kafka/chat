@@ -31,17 +31,20 @@ public class KafkaTestConsumer {
         consumedPartition = empty();
     }
 
-    @KafkaListener(topics = "consumeString")
+    //TODO: Consume a simple string payload from topic "consumeString"
+    // by using the KafkaListener annotation
     public void consumeString(String str){
         consumedString = Optional.of(str);
         KafkaTestConsumer.log.info("consumeString: {}", str);
     }
 
-    @KafkaListener(topics = "consumeMetadata")
+    //TODO: Consume topic and partition (on which the message was received) as well 
+    // as the string payload from topic "consumeMetadata" by using the KafkaListener, 
+    // Payload and Header annotation and the KafkaHeaders class
     public void consumeMetadata(
-        @Payload String value, 
-        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic, 
-        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) Integer partition
+       String value, 
+       String topic, 
+       Integer partition
     ){
         consumedString = Optional.of(value);
         consumedTopic = Optional.of(topic);

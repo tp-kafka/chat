@@ -22,7 +22,6 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 @SpringBootTest
 @EmbeddedKafka(topics = { "string", "stringWithKey",
         "stringToPartition" }, bootstrapServersProperty = "spring.kafka.properties.bootstrap.servers")
-@Disabled("Dieser Test ist aus einer vorherigen Übung")
 class ProduceExcerciseTest {
 
     @Autowired
@@ -45,7 +44,7 @@ class ProduceExcerciseTest {
         var teststring = "Hello Kafka!";
 
         // act
-        kafka.send(topic, teststring);
+        //TODO: Use the KafkaTemplate (kafka) to produce a string to a topic.
 
         // assert
         var cf = new DefaultKafkaConsumerFactory<String, String>(consumerProps());
@@ -68,7 +67,7 @@ class ProduceExcerciseTest {
         var teststring = "Hello Kafka Keys!";
 
         // act
-        kafka.send(topic, key, teststring);
+        //TODO: Use the KafkaTemplate (kafka) to produce a string with a given key to a topic.
 
         // assert
         var cf = new DefaultKafkaConsumerFactory<String, String>(consumerProps());
@@ -91,8 +90,7 @@ class ProduceExcerciseTest {
         var p1 = "Send this to partition 1";
 
         // act
-        kafka.send(topic, 0, null, p0);
-        kafka.send(topic, 1, null, p1);
+        //TODO: Use the KafkaTemplate (kafka) to produce a string without key to a specified partition of a topic.
 
         // assert
         var cf = new DefaultKafkaConsumerFactory<String, String>(consumerProps());

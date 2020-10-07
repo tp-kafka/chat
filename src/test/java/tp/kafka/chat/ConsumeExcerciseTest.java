@@ -23,7 +23,6 @@ import lombok.extern.log4j.Log4j2;
 @EmbeddedKafka(topics = { "consumeString",
         "consumeMetadata" }, bootstrapServersProperty = "spring.kafka.properties.bootstrap.servers")
 @Log4j2
-@Disabled("Dieser Test ist aus einer vorherigen Übung")
 public class ConsumeExcerciseTest {
 
     @TestConfiguration
