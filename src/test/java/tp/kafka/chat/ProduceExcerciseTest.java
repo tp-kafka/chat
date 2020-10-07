@@ -1,15 +1,14 @@
 package tp.kafka.chat;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,12 +17,11 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
-import static org.assertj.core.groups.Tuple.tuple;
 
 @SpringBootTest
 @EmbeddedKafka(topics = { "string", "stringWithKey",
         "stringToPartition" }, bootstrapServersProperty = "spring.kafka.properties.bootstrap.servers")
-// @Disabled("Diesen Test brauchen wir erst im späteren Verlauf der Übung")
+@Disabled("Dieser Test ist aus einer vorherigen Übung")
 class ProduceExcerciseTest {
 
     @Autowired
