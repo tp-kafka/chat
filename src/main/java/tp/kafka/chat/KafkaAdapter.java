@@ -1,5 +1,6 @@
 package tp.kafka.chat;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -30,9 +31,10 @@ public class KafkaAdapter {
     }
 
     @KafkaListener(topics = "${chat.topics.in.chat}", errorHandler = "logErrors")
-    public void receiveChatMessage(ChatMessage message) {
-        var username = "TODO"; //message.getUser().getScreenname();
-        var text = message.toString(); //message.getMessage();
+    public void receiveChatMessage(@Payload RichChatMessage message) {
+        var username = Optional.ofNullable(message.getUser())
+            .map(User::getScreenname).orElse("%");
+        var text = message.getMessage();
         KafkaAdapter.log.info("{}> {}", username, text);
     }
 
