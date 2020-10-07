@@ -1,5 +1,7 @@
 package tp.kafka.chat;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatMessage {
-    private String userId;
-    private String message;
+public class User  {
+
+    UUID id;
+    String screenname;
+    String name;
 }

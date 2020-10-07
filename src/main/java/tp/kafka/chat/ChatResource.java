@@ -30,6 +30,6 @@ public class ChatResource {
             throws InterruptedException, ExecutionException {
         var chatMessage = new ChatMessage(username, msg);
         kafka.sendChatMessage(chatMessage);
-        ChatResource.log.info(chatMessage);
+        ChatResource.log.info("Rest Request forwareded to Kafka: {}", chatMessage);
     }
 }
