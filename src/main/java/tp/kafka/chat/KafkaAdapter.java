@@ -27,22 +27,14 @@ public class KafkaAdapter {
     }
 
     public void sendChatMessage(ChatMessage chatMessage) throws InterruptedException, ExecutionException {
-        var result = kafka.send(inputTopic, chatMessage).get();
+        //TODO send chatmessage serialized as JSON to inputTopic
     }
 
-    @KafkaListener(topics = "${chat.topics.in.chat}", errorHandler = "logErrors")
-    public void receiveChatMessage(@Payload RichChatMessage message) {
-        var username = Optional.ofNullable(message.getUser())
-            .map(User::getScreenname).orElse("%");
+    //TODO receive chatmessage (annotate here)
+    public void receiveChatMessage(ChatMessage message) {
+        var username = message.getUserId();
         var text = message.getMessage();
         KafkaAdapter.log.info("{}> {}", username, text);
     }
 
-    @Bean
-    public KafkaListenerErrorHandler logErrors() {
-        return (message, exception) -> {
-            KafkaAdapter.log.error("{} caused {}", message, exception);
-            return "error";
-        };
-    }
 }
