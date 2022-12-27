@@ -19,5 +19,5 @@
     }
   },
   "forwardPorts": [8080],
-  "dockerComposeFile": "docker-compose.devcontainer.yml"
+  "dockerComposeFile": "./docker-compose.devcontainer.yml"
 }
