@@ -1,12 +1,8 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {
-    "ghcr.io/devcontainers/features/java:1": {
-      "version": "17",
-      "installMaven": true  
-    },
-    "ghcr.io/devcontainers-contrib/features/angular-cli:1": {}  
-  },
+  "name": "Chat Application",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "chat",
+  "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -19,5 +15,5 @@
     }
   },
   "forwardPorts": [8080],
-  "dockerComposeFile": "./docker-compose.devcontainer.yml"
+  "initializeCommand": "mvn install"
 }
