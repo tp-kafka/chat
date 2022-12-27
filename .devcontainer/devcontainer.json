@@ -1,0 +1,24 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "jdkDistro": "open",
+      "installMaven": true  
+    },
+    "ghcr.io/devcontainers-contrib/features/angular-cli:1": {}  
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "redhat.java",
+        "redhat.vscode-quarkus",
+        "redhat.vscode-microprofile",
+        "redhat.vscode-commons",
+        "gabrielbb.vscode-lombok"
+      ]
+    }
+  },
+  "forwardPorts": [8080],
+  "dockerComposeFile": "docker-compose.devcontainer.yml"
+}
