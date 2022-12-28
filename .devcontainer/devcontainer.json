@@ -1,8 +1,7 @@
 {
   "name": "Chat Application",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "chat",
-  "postStartCommand": "mvn spring-boot:run",
+  "privileged": true,
+  "postCreateCommand": "mvn install",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -18,6 +17,7 @@
     }
   },
   "forwardPorts": [
-    8080, 9000, 9092
+    8080,
+    9000
   ]
 }
