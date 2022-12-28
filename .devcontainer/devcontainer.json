@@ -11,7 +11,9 @@
 		"vscjava.vscode-lombok",
 		"DavidAnson.vscode-markdownlint",
 		"redhat.vscode-quarkus",
-		"redhat.vscode-microprofile"
+		"redhat.vscode-microprofile",
+		"Pivotal.vscode-boot-dev-pack",
+		"ms-azuretools.vscode-docker"
 	]
     }
   },
