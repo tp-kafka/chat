@@ -2,6 +2,7 @@
   "name": "Chat Application",
   "dockerComposeFile": "docker-compose.yml",
   "service": "chat",
+  "postStartCommand": "mvn spring-boot:run",
   "customizations": {
     "vscode": {
       "extensions": [
