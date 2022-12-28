@@ -1,23 +1,23 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {
-    "ghcr.io/devcontainers/features/java:1": {
-      "version": "17",
-      "installMaven": true  
-    },
-    "ghcr.io/devcontainers-contrib/features/angular-cli:1": {}  
-  },
+  "name": "Chat Application",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "chat",
+  "postStartCommand": "mvn spring-boot:run",
   "customizations": {
     "vscode": {
       "extensions": [
-        "redhat.java",
-        "redhat.vscode-quarkus",
-        "redhat.vscode-microprofile",
-        "redhat.vscode-commons",
-        "gabrielbb.vscode-lombok"
-      ]
+		"vscjava.vscode-java-debug",
+		"vscjava.vscode-java-pack",
+		"vscjava.vscode-lombok",
+		"DavidAnson.vscode-markdownlint",
+		"redhat.vscode-quarkus",
+		"redhat.vscode-microprofile",
+		"Pivotal.vscode-boot-dev-pack",
+		"ms-azuretools.vscode-docker"
+	]
     }
   },
-  "forwardPorts": [8080],
-  "dockerComposeFile": "./docker-compose.devcontainer.yml"
+  "forwardPorts": [
+    8080
+  ]
 }
