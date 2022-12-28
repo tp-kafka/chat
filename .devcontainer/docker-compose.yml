@@ -8,12 +8,13 @@ services:
     volumes:
       - ..:/workspace:cached
     command: sleep infinity
+    ports:
+      - 0.0.0.0:9090:9090
+      - 0.0.0.0:8080:8080
 
   kafka-ui:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
-    ports:
-      - 8080:8080
     depends_on:
       - kafka0
       - kafka1
@@ -36,9 +37,6 @@ services:
     image: confluentinc/cp-kafka:7.2.1
     hostname: kafka0
     container_name: kafka0
-    ports:
-      - "9092:9092"
-      - "9997:9997"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -63,8 +61,6 @@ services:
 
   schemaregistry0:
     image: confluentinc/cp-schema-registry:7.2.1
-    ports:
-      - 8085:8085
     depends_on:
       - kafka0
     environment:
@@ -79,8 +75,6 @@ services:
 
   kafka-connect0:
     image: confluentinc/cp-kafka-connect:6.0.1
-    ports:
-      - 8083:8083
     depends_on:
       - kafka0
       - schemaregistry0
