@@ -17,9 +17,7 @@ services:
     image: provectuslabs/kafka-ui:latest
     depends_on:
       - kafka0
-      - kafka1
       - schemaregistry0
-      - schemaregistry1
       - kafka-connect0
     environment:
       KAFKA_CLUSTERS_0_NAME: local
