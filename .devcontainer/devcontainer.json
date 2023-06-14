@@ -19,5 +19,6 @@
   "forwardPorts": [
     8080,
     9000
-  ]
+  ],
+  "dockerComposeFile": ".devcontainer/docker-compose.yml"
 }
