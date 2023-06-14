@@ -20,5 +20,5 @@
     8080,
     9000
   ],
-  "dockerComposeFile": ".devcontainer/docker-compose.yml"
+  "dockerComposeFile": "docker-compose.yml"
 }
