@@ -85,6 +85,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ..:/workspaces:cached
+      - /var/run/docker.sock:/var/run/docker-host.sock 
+
+    # Overrides default command so things don't shut down after the process ends.
+    entrypoint: /usr/local/share/docker-init.sh
+    command: sleep infinity 
     command: /bin/sh -c "while sleep 1000; do :; done"
     ports:
       - "8080:8080"
