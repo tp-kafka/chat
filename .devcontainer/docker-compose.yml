@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   kafka-ui:
-    network_mode: service:db
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
     depends_on:
@@ -20,7 +19,6 @@ services:
       - "8080:8080"
 
   kafka0:
-    network_mode: service:db
     image: confluentinc/cp-kafka:7.2.1
     hostname: kafka0
     container_name: kafka0
@@ -47,7 +45,6 @@ services:
     command: "bash -c 'if [ ! -f /tmp/update_run.sh ]; then echo \"ERROR: Did you forget the update_run.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update_run.sh && /etc/confluent/docker/run ; fi'"
 
   schema-registry0:
-    network_mode: service:db
     image: confluentinc/cp-schema-registry:7.2.1
     depends_on:
       - kafka0
@@ -85,7 +82,6 @@ services:
 #      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
 
   kafka-init-topics:
-    network_mode: service:db
     image: confluentinc/cp-kafka:7.2.1
     volumes:
        - ./compose/message.json:/data/message.json
