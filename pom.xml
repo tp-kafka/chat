@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>tp.kafka</groupId>
 	<artifactId>chat</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>chat</name>
 	<description>Chat Application</description>
 
@@ -96,6 +96,6 @@
 	<scm>
 		<connection>scm:git:https://github.com/tp-kafka/chat</connection>
 		<url>https://github.com/tp-kafka/chat</url>
-	  <tag>HEAD</tag>
+	  <tag>v0.0.2</tag>
   </scm>
 </project>
