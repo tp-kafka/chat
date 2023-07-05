@@ -48,8 +48,8 @@ jobs:
         id: properties
         uses: christian-draeger/read-properties@1.1.1
         with:
-          path: './release.properties'
-          properties: 'scm.tag'
+          path: ./release.properties
+          properties: scm.tag
 
       - name: Create Release Draft
         id: create_release
@@ -59,6 +59,6 @@ jobs:
         with:
           tag_name: ${{ steps.properties.outputs.scm-tag }}
           release_name: Release ${{ steps.properties.outputs.scm-tag }}
-          body_path: target/CHANGELOG.md
+          body_path: ./target/CHANGELOG.md
           draft: true
           prerelease: false
