@@ -30,14 +30,16 @@ jobs:
       - name: Generate Changelog
         run: mvn --no-transfer-progress -Dfile=target/CHANGELOG.md se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:git-changelog
 
-      - name: Create Tag and Update Main-Branch
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
-          mvn --batch-mode --no-transfer-progress -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
-          echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+      - name: Git Authentication
+        run: echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
         env:
           GITHUB_TOKEN: ${{ github.token }}            
-        
+      
+      - name: Create Tag and Update Main-Branch
+        run: |
+          mvn --batch-mode --no-transfer-progress -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
+          echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          
       - name: Create Release Draft
         id: create_release
         uses: actions/create-release@v1
