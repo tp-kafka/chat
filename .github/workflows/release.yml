@@ -3,7 +3,7 @@ name: Create a Release Tag
 on: [workflow_dispatch]
 
 jobs:
-  create-tag:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,8 +35,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.email "git@i3oot.de"
-          git config --global user.name "i3oot"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
             
       - name: Create Tag and Update Main-Branch
         run: |
@@ -44,7 +44,7 @@ jobs:
         env:  
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Read value from Properties-file
+      - name: Read Tag Name
         id: properties
         uses: christian-draeger/read-properties@1.1.1
         with:
