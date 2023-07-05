@@ -37,7 +37,7 @@ jobs:
             
       - name: Create Tag and Update Main-Branch
         run: |
-          mvn --batch-mode --no-transfer-progress -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
+          mvn --batch-mode --no-transfer-progress -DscmCommentPrefix="chore(release): :bookmark: " release:prepare
         env:  
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
