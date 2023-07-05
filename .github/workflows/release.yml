@@ -1,0 +1,46 @@
+name: Create a Release Tag
+
+on: [workflow_dispatch]
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fail if branch is not main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "This workflow should not be triggered on a branch other than main"
+          exit 1
+
+      - name: Checkout
+        uses: actions/checkout@v3
+  
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: 'maven'
+          check-latest: true
+  
+      - name: Create Tag
+        run: |
+          mvn se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:semantic-version
+          mvn -Dfile=target/CHANGELOG.md se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:git-changelog
+          mvn --batch-mode -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
+          echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ github.token }}            
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.TAG }}
+          release_name: Release ${{ env.TAG }}
+          body_path: target/CHANGELOG.md
+          draft: true
+          prerelease: false
