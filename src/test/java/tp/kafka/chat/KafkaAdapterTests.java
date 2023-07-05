@@ -20,7 +20,7 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 
 @SpringBootTest
 @EmbeddedKafka(topics = "chat", bootstrapServersProperty = "spring.kafka.properties.bootstrap.servers")
-//@Disabled("Diesen Test brauchen wir erst im späteren Verlauf der Übung")
+@Disabled("Diesen Test brauchen wir erst im späteren Verlauf der Übung")
 class KafkaAdapterTests {
 
     @Autowired
