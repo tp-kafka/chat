@@ -25,14 +25,15 @@ jobs:
           check-latest: true
   
       - name: Calculate semantic version
-        run: mvn --batch-mode se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:semantic-version
+        run: mvn --no-transfer-progress se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:semantic-version
 
       - name: Generate Changelog
-        run: mvn --batch-mode -Dfile=target/CHANGELOG.md se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:git-changelog
+        run: mvn --no-transfer-progress -Dfile=target/CHANGELOG.md se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:git-changelog
 
       - name: Create Tag and Update Main-Branch
         run: |
-          mvn --batch-mode -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
+          gh auth login
+          mvn --batch-mode --no-transfer-progress -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
           echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ github.token }}            
