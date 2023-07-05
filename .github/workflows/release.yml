@@ -28,16 +28,16 @@ jobs:
         run: mvn se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:semantic-version
 
       - name: Generate Changelog
-          run: mvn -Dfile=target/CHANGELOG.md se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:git-changelog
+        run: mvn -Dfile=target/CHANGELOG.md se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:git-changelog
 
       - name: Create Tag and Update Main-Branch
-            run: |
-              mvn --batch-mode -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
-              echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-            env:
-              GITHUB_TOKEN: ${{ github.token }}            
+        run: |
+          mvn --batch-mode -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
+          echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ github.token }}            
         
-      - name: Create Release
+      - name: Create Release Draft
         id: create_release
         uses: actions/create-release@v1
         env:
