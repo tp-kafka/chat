@@ -33,23 +33,32 @@ jobs:
       - name: Generate Changelog
         run: mvn --no-transfer-progress -Dfile=target/CHANGELOG.md se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:git-changelog
 
-      - name: Create Tag and Update Main-Branch
+      - name: Configure Git
         run: |
           git config --global user.email "git@i3oot.de"
           git config --global user.name "i3oot"
+            
+      - name: Create Tag and Update Main-Branch
+        run: |
           mvn --batch-mode --no-transfer-progress -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
-          echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
         env:  
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+
+      - name: Read value from Properties-file
+          id: properties
+          uses: christian-draeger/read-properties@1.1.1
+          with:
+            path: './release.properties'
+            properties: 'scm.tag'
+
       - name: Create Release Draft
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ env.TAG }}
-          release_name: Release ${{ env.TAG }}
+          tag_name: ${{ steps.properties.outputs.scm-tag }}
+          release_name: Release ${{ steps.properties.outputs.scm-tag }}
           body_path: target/CHANGELOG.md
           draft: true
           prerelease: false
