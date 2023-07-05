@@ -23,8 +23,10 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
           check-latest: true
-          server-id: github
 
+      - name: Debug Settings
+        run: mvn help:effective-settings
+        
       - name: Calculate semantic version
         run: mvn --no-transfer-progress se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:semantic-version
 
