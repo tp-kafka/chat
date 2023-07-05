@@ -32,7 +32,7 @@ jobs:
 
       - name: Create Tag and Update Main-Branch
         run: |
-          gh auth login
+          gh auth login -h github.com
           mvn --batch-mode --no-transfer-progress -DscmCommentPrefix="chore(release): :bookmark:" release:prepare
           echo "TAG=v$(mvn -f pom.xml.tag help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
         env:
