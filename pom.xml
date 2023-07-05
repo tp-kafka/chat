@@ -97,7 +97,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<scm>
-		<connection>scm:git:git@github.com:tp-kafka/chat.git</connection>
+		<connection>scm:git:https://github.com/tp-kafka/chat</connection>
 		<url>https://github.com/tp-kafka/chat</url>
 	</scm>
 </project>
