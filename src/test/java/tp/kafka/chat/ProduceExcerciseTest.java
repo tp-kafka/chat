@@ -3,6 +3,7 @@ package tp.kafka.chat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
+import java.time.Duration;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -51,7 +52,7 @@ class ProduceExcerciseTest {
         var cf = new DefaultKafkaConsumerFactory<String, String>(consumerProps());
         var consumer = cf.createConsumer("sendString", "sendString");
         this.embeddedKafka.consumeFromAnEmbeddedTopic(consumer, topic);
-        ConsumerRecords<String, String> messages = KafkaTestUtils.getRecords(consumer, 5000l);
+        ConsumerRecords<String, String> messages = KafkaTestUtils.getRecords(consumer, Duration.ofSeconds(5));
         assertThat(messages.count())
             .as("we should receive at least one message").isGreaterThanOrEqualTo(1);
         assertThat(messages).extracting(ConsumerRecord::value)
@@ -74,7 +75,7 @@ class ProduceExcerciseTest {
         var cf = new DefaultKafkaConsumerFactory<String, String>(consumerProps());
         var consumer = cf.createConsumer("sendStringWithKey", "sendStringWithKey");
         this.embeddedKafka.consumeFromAnEmbeddedTopic(consumer, topic);
-        ConsumerRecords<String, String> messages = KafkaTestUtils.getRecords(consumer, 5000l);
+        ConsumerRecords<String, String> messages = KafkaTestUtils.getRecords(consumer, Duration.ofSeconds(5));
         assertThat(messages.count())
             .as("we should receive at least one message").isGreaterThanOrEqualTo(1);
         assertThat(messages).extracting(ConsumerRecord::value)
@@ -98,7 +99,7 @@ class ProduceExcerciseTest {
         var cf = new DefaultKafkaConsumerFactory<String, String>(consumerProps());
         var consumer = cf.createConsumer("stringToPartition", "stringToPartition");
         this.embeddedKafka.consumeFromAnEmbeddedTopic(consumer, topic);
-        ConsumerRecords<String, String> messages = KafkaTestUtils.getRecords(consumer, 5000l);
+        ConsumerRecords<String, String> messages = KafkaTestUtils.getRecords(consumer, Duration.ofSeconds(5));
         assertThat(messages.count()).as("we should receive at least two messages").isGreaterThanOrEqualTo(2);
         assertThat(messages).extracting(ConsumerRecord::value)
             .as("should receive our teststrings").contains(p0,p1);

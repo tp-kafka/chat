@@ -2,6 +2,8 @@ package tp.kafka.chat;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.Duration;
+
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -47,7 +49,7 @@ class KafkaAdapterTests {
 	void succesfulMessage() throws Exception {
         kafkaAdapter.sendChatMessage(new ChatMessage("userId", "message"));
         
-        ConsumerRecords<Object, Object> messages = KafkaTestUtils.getRecords(consumer, 5000l);
+        ConsumerRecords<Object, Object> messages = KafkaTestUtils.getRecords(consumer, Duration.ofSeconds(5));
         assertThat(messages.count()).isGreaterThanOrEqualTo(1);
 	}
 
