@@ -41,7 +41,7 @@ public class KafkaTestConsumer {
     public void consumeMetadata(
         @Payload String value, 
         @Header(KafkaHeaders.RECEIVED_TOPIC) String topic, 
-        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) Integer partition
+        @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition
     ){
         consumedString = Optional.of(value);
         consumedTopic = Optional.of(topic);
