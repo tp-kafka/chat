@@ -15,6 +15,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
   
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -24,8 +26,8 @@ jobs:
           cache: 'maven'
           check-latest: true
 
-      - name: Fetch tags
-        run: git fetch --tags origin
+#      - name: Fetch tags
+#        run: git fetch --tags origin
 
       - name: Calculate semantic version
         run: mvn --no-transfer-progress se.bjurr.gitchangelog:git-changelog-maven-plugin:1.96.1:semantic-version
