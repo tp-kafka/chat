@@ -20,6 +20,14 @@
     8080,
     9000
   ],
+  "portsAttributes": {
+    "8080": {
+      "label": "Kafka UI"
+    },
+    "9000": {
+      "label": "Spring Boot App"
+    }
+  },
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
 
