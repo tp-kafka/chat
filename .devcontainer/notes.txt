@@ -1,0 +1,19 @@
+Install:
+  confluent-hub install cjmatta/kafka-connect-irc:5.0.0
+Config:
+{
+    "connector.class": "com.github.cjmatta.kafka.connect.irc.IrcSourceConnector",
+    "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+    
+    "key.converter.schemas.enable": false,
+    "value.converter.schemas.enable": true,
+    "value.converter.schema.registry.url": "http://localhost:8085",
+    "key.converter.schema.registry.url": "http://localhost:8085",
+    
+    "irc.channels": "#mauriceweber",
+    "irc.server": "irc.chat.twitch.tv",
+    "irc.bot.name": "justinfan517284624538",
+    "kafka.topic": "first.messages",
+    "tasks.max": "1"
+}
+
