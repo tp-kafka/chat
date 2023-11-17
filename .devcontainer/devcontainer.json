@@ -11,7 +11,7 @@
         "DavidAnson.vscode-markdownlint",
         "Pivotal.vscode-boot-dev-pack",
         "ms-azuretools.vscode-docker",
-        "peterj.proto",
+        "pbkit.vscode-pbkit",
         "vivaxy.vscode-conventional-commits",
         "vscjava.vscode-spring-boot-dashboard",
         "vmware.vscode-boot-dev-pack"

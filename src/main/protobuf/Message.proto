@@ -1,0 +1,19 @@
+syntax = "proto3";
+package com.github.cjmatta.kafka.connect.irc;
+
+option java_outer_classname = "MessageEvent";
+
+import "google/protobuf/timestamp.proto";
+
+message Message {
+  .google.protobuf.Timestamp createdat = 1;
+  string channel = 2;
+  .com.github.cjmatta.kafka.connect.irc.Message.User sender = 3;
+  string message = 4;
+
+  message User {
+    string nick = 1;
+    string login = 2;
+    string hostname = 3;
+  }
+}
