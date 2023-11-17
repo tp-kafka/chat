@@ -13,10 +13,8 @@
         "ms-azuretools.vscode-docker",
         "peterj.proto",
         "vivaxy.vscode-conventional-commits",
-        "42Crunch.vscode-openapi",
         "vscjava.vscode-spring-boot-dashboard",
-        "vmware.vscode-boot-dev-pack",
-        "redhat.fabric8-analytics"
+        "vmware.vscode-boot-dev-pack"
       ]
     }
   },
