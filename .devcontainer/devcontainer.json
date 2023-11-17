@@ -9,10 +9,13 @@
         "vscjava.vscode-java-pack",
         "vscjava.vscode-lombok",
         "DavidAnson.vscode-markdownlint",
-        "redhat.vscode-quarkus",
-        "redhat.vscode-microprofile",
         "Pivotal.vscode-boot-dev-pack",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "peterj.proto",
+        "vivaxy.vscode-conventional-commits",
+        "42Crunch.vscode-openapi",
+        "vscjava.vscode-spring-boot-dashboard",
+        "vmware.vscode-spring-boot"
       ]
     }
   },
