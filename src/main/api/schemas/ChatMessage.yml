@@ -1,7 +1,25 @@
 type: object
+required: 
+  - channel
+  - message
+  - nick
 properties:
-  Test:
+  channel:
     type: string
-    maxLength: 100
-    description: A ChatMessage
-    example: TODO
+    minLength: 3
+    maxLength: 128
+    description: The name of the channel to which the message should be sent
+    example: "#test"
+  message:
+    type: string
+    minLength: 1
+    maxLength: 4096
+    description: The message to be sent
+    example: hello world.
+  nick:
+    type: string
+    minLength: 3
+    maxLength: 128
+    description: The name of the user who sent the message
+    example: 'user'
+

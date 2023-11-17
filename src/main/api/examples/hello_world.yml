@@ -1,4 +1,8 @@
-summary: Hello World
-description: Send a Hello World Message.
+summary: "Hello World to #test"
+description: Send a Hello World Message to the channel "#test".
 value: |
-  TODO
+  {
+    "channel": "#test",
+    "message": "hello world.",
+    "nick": "user"
+  }

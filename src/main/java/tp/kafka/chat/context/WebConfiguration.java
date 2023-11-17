@@ -1,4 +1,4 @@
-package tp.kafka.chat;
+package tp.kafka.chat.context;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
