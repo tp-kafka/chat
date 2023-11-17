@@ -3,3 +3,6 @@ server:
 spring:
   application:
     name: Chat Application
+springdoc:
+  swagger-ui:
+    url: /openapi/chat.yml

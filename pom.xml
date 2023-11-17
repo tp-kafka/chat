@@ -63,11 +63,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
     <groupId>org.springdoc</groupId>
-    <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
     <version>2.2.0</version>
 </dependency>
 		<!-- Test Dependencies-->
@@ -89,6 +89,15 @@
 	</dependencies>
 
 	<build>
+	   <resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/api</directory>
+				<targetPath>static/openapi</targetPath>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -142,7 +151,7 @@
 							<generateModelTests>false</generateModelTests>
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<generatorName>spring</generatorName>
-							<inputSpec>${project.basedir}/src/main/resources/static/api/chat.yml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/api/chat.yml</inputSpec>
 							<configOptions>
 								<annotationLibrary>none</annotationLibrary>
 								<apiPackage>tp.kafka.chat.api</apiPackage>
@@ -150,7 +159,7 @@
 								<documentationProvider>source</documentationProvider>
 								<modelPackage>tp.kafka.chat.api.model</modelPackage>
 								<openApiNullable>false</openApiNullable>
-								<reactive>true</reactive>
+								<reactive>false</reactive>
 								<sourceFolder>.</sourceFolder>
 								<useSpringBoot3>true</useSpringBoot3>
 								<useSwaggerUI>false</useSwaggerUI>

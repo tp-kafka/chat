@@ -1,7 +1,0 @@
-type: object
-properties:
-  Test:
-    type: string
-    maxLength: 100
-    description: A ChatMessage
-    example: TODO

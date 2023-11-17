@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ChatApplication<chat>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "tp.kafka.chat.ChatApplication",
+            "projectName": "chat",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
