@@ -1,0 +1,45 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Chat Application API 
+
+servers:
+  - url: https://{codespace}-9000.app.github.dev
+    description: Codespace
+    variables:
+      codespace:
+        description: Codespace URL
+        default: unknown
+  - url: http://localhost:9000/chat
+    description: Local Development
+
+
+paths:
+  /messages:
+    post:
+      operationId: SendMessage
+      summary: Send a Message to the Chat Application
+      description: This endpoint allows you to send a chat message to the application
+      tags:
+        - messsages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatMessage"
+            examples:
+              Hello World:
+                $ref: examples/hello_world.yml
+      responses:
+        202:
+          description: The event was accepted (additional elements or attributes will be ignored).
+        400:
+          description: The event does not match the schema.
+        500:
+          description: Internal server error during processing.
+
+components:
+  schemas:
+    ChatMessage:
+      $ref: schemas/ChatMessage.yml
+

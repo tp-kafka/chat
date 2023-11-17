@@ -4,8 +4,15 @@ info:
   title: Chat Application API 
 
 servers:
+  - url: https://{codespace}-9000.app.github.dev
+    description: Codespace
+    variables:
+      codespace:
+        description: Codespace URL
+        default: unknown
   - url: http://localhost:9000/chat
     description: Local Development
+
 
 paths:
   /messages:

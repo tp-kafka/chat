@@ -8,6 +8,7 @@
 		<version>3.1.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>tp.kafka</groupId>
 	<artifactId>chat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -19,10 +20,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
@@ -35,11 +32,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.confluent</groupId>
@@ -71,12 +63,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+		<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+    <version>2.2.0</version>
+</dependency>
 		<!-- Test Dependencies-->
 		<dependency>
 			<groupId>org.assertj</groupId>
@@ -102,6 +95,38 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>no.entur.mapstruct.spi</groupId>
+							<artifactId>protobuf-spi-impl</artifactId>
+							<version>1.44</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</path>
+						<path>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-configuration-processor</artifactId>
+							<version>${project.parent.version}</version>
+						</path>
+					</annotationProcessorPaths>
+					<compilerArgs>
+						<arg>-Amapstruct.defaultComponentModel=spring</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
 				<version>7.1.0</version>
@@ -117,12 +142,12 @@
 							<generateModelTests>false</generateModelTests>
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<generatorName>spring</generatorName>
-							<inputSpec>${project.basedir}/src/main/api/chat.yml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/static/api/chat.yml</inputSpec>
 							<configOptions>
 								<annotationLibrary>none</annotationLibrary>
 								<apiPackage>tp.kafka.chat.api</apiPackage>
 								<delegatePattern>true</delegatePattern>
-								<documentationProvider>none</documentationProvider>
+								<documentationProvider>source</documentationProvider>
 								<modelPackage>tp.kafka.chat.api.model</modelPackage>
 								<openApiNullable>false</openApiNullable>
 								<reactive>true</reactive>
@@ -136,7 +161,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-
 	</build>
 
 	<repositories>
