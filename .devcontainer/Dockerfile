@@ -1,4 +1,4 @@
-ARG VARIANT=17-buster
+ARG VARIANT=21-buster
 FROM mcr.microsoft.com/vscode/devcontainers/java:${VARIANT}
 SHELL ["/bin/bash", "-c"]
 RUN source /usr/local/sdkman/bin/sdkman-init.sh; \
