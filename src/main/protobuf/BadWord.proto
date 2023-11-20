@@ -1,0 +1,9 @@
+syntax = "proto3";
+package tp.lkafka.chat.api;
+
+option java_outer_classname = "BadWordEvent";
+
+
+message BadWord {
+    string word = 1;
+}

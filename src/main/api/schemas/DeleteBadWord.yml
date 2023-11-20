@@ -1,0 +1,9 @@
+type: object
+properties:
+  wordlist:
+    type: array
+    items:
+      type: string
+      minLength: 3
+      maxLength: 128
+    description: a list with bad words

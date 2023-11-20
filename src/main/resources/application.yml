@@ -25,4 +25,5 @@ topics:
     chat: chat
   outgoing:
     chat: chat
+    bad-words: badwords
 

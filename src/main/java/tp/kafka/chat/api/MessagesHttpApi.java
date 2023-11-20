@@ -1,5 +1,7 @@
 package tp.kafka.chat.api;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.github.cjmatta.kafka.connect.irc.MessageEvent.Message;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import tp.kafka.chat.api.model.ChatMessage;
 import tp.kafka.chat.context.TopicProperties;
@@ -21,12 +24,13 @@ public class MessagesHttpApi implements MessagesApiDelegate {
     final MessageMapper messageMapper;
 
     @Override
+    @SneakyThrows
     public ResponseEntity<Void> sendMessage(ChatMessage chatMessage) {
         log.info("sending chatMessage {}", chatMessage);
         var message = messageMapper.toProtobuf(chatMessage);
         var key = message.getChannel();
         var topic = topicProperties.getOutgoing().getChat();
-        kafkaTemplate.send(topic, key, message);
+        kafkaTemplate.send(topic, key, message).get(2, TimeUnit.SECONDS);
         return ResponseEntity.accepted().build();
     }
 }

@@ -29,7 +29,7 @@ paths:
   /badwords:
     post:
       operationId: CreateBadWord
-      summary: Regiser a new word a bad
+      summary: Register a new word as bad
       description: This endpoint allows you to create a bad word, wich will be used to filter messages, in the application
       tags:
         - badwords
@@ -48,6 +48,27 @@ paths:
           description: The event does not match the schema.
         500:
           description: Internal server error during processing.
+    delete:
+      operationId: DeleteBadWord
+      summary: Delete a word from the bad word list
+      description: This endpoint allows you to delete a bad word, wich will be used to filter messages, in the application
+      tags:
+        - badwords
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteBadWord"
+            examples:
+              Hello World:
+                $ref: examples/bad_word.yml
+      responses:
+        200:
+          description: The event was accepted (additional elements or attributes will be ignored).
+        400:
+          description: The event does not match the schema.
+        500:
+          description: Internal server error during processing.
 
 components:
   schemas:
@@ -55,4 +76,5 @@ components:
       $ref: schemas/ChatMessage.yml
     CreateBadWord:
       $ref: schemas/CreateBadWord.yml
-
+    DeleteBadWord:
+      $ref: schemas/DeleteBadWord.yml

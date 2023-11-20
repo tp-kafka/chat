@@ -24,6 +24,8 @@ public class TopicProperties {
     public static final class Outgoing {
         @NotEmpty
         String chat;
+        @NotEmpty
+        String badWords;
     }
 
     @NotNull
