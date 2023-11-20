@@ -39,7 +39,7 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateBadWord"
             examples:
-              Hello World:
+              Create Default Words:
                 $ref: examples/bad_word.yml
       responses:
         200:
@@ -60,13 +60,28 @@ paths:
             schema:
               $ref: "#/components/schemas/DeleteBadWord"
             examples:
-              Hello World:
+              Delete Default Words:
                 $ref: examples/bad_word.yml
       responses:
         200:
           description: The event was accepted (additional elements or attributes will be ignored).
         400:
           description: The event does not match the schema.
+        500:
+          description: Internal server error during processing.
+    get:
+      operationId: ReadBadWord
+      summary: Read the bad word list
+      description: This endpoint allows you to read the bad word list, wich will be used to filter messages in the application
+      tags:
+        - badwords
+      responses:
+        200:
+          description: The word list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadBadWord"
         500:
           description: Internal server error during processing.
 
@@ -78,3 +93,5 @@ components:
       $ref: schemas/CreateBadWord.yml
     DeleteBadWord:
       $ref: schemas/DeleteBadWord.yml
+    ReadBadWord:
+      $ref: schemas/ReadBadWord.yml

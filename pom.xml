@@ -75,6 +75,15 @@
     <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
     <version>2.2.0</version>
 </dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-streams-protobuf-serde</artifactId>
+			<version>7.5.1</version>
+		</dependency>
 		<!-- Test Dependencies-->
 		<dependency>
 			<groupId>org.assertj</groupId>
@@ -154,7 +163,8 @@
 							<generateApis>true</generateApis>
 							<generateApiTests>false</generateApiTests>
 							<generateModelTests>false</generateModelTests>
-							<generateSupportingFiles>false</generateSupportingFiles>
+							<generateSupportingFiles>true</generateSupportingFiles>
+							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 							<generatorName>spring</generatorName>
 							<inputSpec>${project.basedir}/src/main/api/chat.yml</inputSpec>
 							<configOptions>
@@ -169,6 +179,7 @@
 								<useSpringBoot3>true</useSpringBoot3>
 								<useSwaggerUI>false</useSwaggerUI>
 								<withXml>false</withXml>
+								<skipDefaultInterface>false</skipDefaultInterface>
 							</configOptions>
 						</configuration>
 					</execution>
