@@ -26,9 +26,33 @@ paths:
           description: The event does not match the schema.
         500:
           description: Internal server error during processing.
+  /badwords:
+    post:
+      operationId: CreateBadWord
+      summary: Regiser a new word a bad
+      description: This endpoint allows you to create a bad word, wich will be used to filter messages, in the application
+      tags:
+        - badwords
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBadWord"
+            examples:
+              Hello World:
+                $ref: examples/bad_word.yml
+      responses:
+        200:
+          description: The event was accepted (additional elements or attributes will be ignored).
+        400:
+          description: The event does not match the schema.
+        500:
+          description: Internal server error during processing.
 
 components:
   schemas:
     ChatMessage:
       $ref: schemas/ChatMessage.yml
+    CreateBadWord:
+      $ref: schemas/CreateBadWord.yml
 
