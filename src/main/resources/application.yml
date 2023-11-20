@@ -7,8 +7,14 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer
+    consumer:
+      group-id: chat-application
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer
       properties:
-        "schema.registry.url": http://localhost:8085
+        "specific.protobuf.value.type": com.github.cjmatta.kafka.connect.irc.MessageEvent$Message
+    properties:
+      "schema.registry.url": http://localhost:8085
 
 springdoc:
   swagger-ui:
