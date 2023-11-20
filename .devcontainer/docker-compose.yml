@@ -60,6 +60,9 @@ services:
       - kafka0
       - schema-registry0
       - kafka-init-topics
+    volumes:
+      - ./kafka-connect-irc/share:/usr/share/java/kafka-connect-irc
+      - ./kafka-connect-irc/etc:/etc/kafka-connect-irc
     environment:
       CONNECT_BOOTSTRAP_SERVERS: localhost:29092
       CONNECT_GROUP_ID: compose-connect-group
