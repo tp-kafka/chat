@@ -3,6 +3,20 @@ server:
 spring:
   application:
     name: Chat Application
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer
+      properties:
+        "schema.registry.url": http://localhost:8085
+
 springdoc:
   swagger-ui:
     url: /openapi/chat.yml
+
+topics:
+  incoming:
+    chat: chat
+  outgoing:
+    chat: chat
+
