@@ -28,11 +28,13 @@ import com.github.cjmatta.kafka.connect.irc.MessageEvent.Message;
 import io.confluent.kafka.streams.serdes.protobuf.KafkaProtobufSerde;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import one.util.streamex.StreamEx;
 import tp.kafka.chat.api.BadWordEvent;
 import tp.kafka.chat.api.BadWordEvent.BadWord;
 import tp.kafka.chat.context.TopicProperties;
 
+@Slf4j
 @Configuration
 @EnableKafkaStreams
 @RequiredArgsConstructor
@@ -59,7 +61,7 @@ public class KafkaTopology {
 
     @Bean
     KStream<String, Message> messageSourceStream(){
-        var topic = topics.getBadWords();
+        var topic = topics.getChat();
         var consumerConfig = Consumed
             .with(stringSerde, messageSerde)
             .withName("message-source");
@@ -73,7 +75,8 @@ public class KafkaTopology {
             var table = streamsBuilder.getKafkaStreams().store(StoreQueryParameters.fromNameAndType(badWordGlobalTable.queryableStoreName(), QueryableStoreTypes.keyValueStore()));
             return StreamEx.of(table.all())
                 .map(kv -> (BadWord)kv.value)
-                .anyMatch(badWord -> v.getMessage().contains(badWord.getWord()));
+                .peek(badWord -> log.info("checking {} for {}", v, badWord))
+                .noneMatch(badWord -> v.getMessage().contains(badWord.getWord()));
         });
     }
 

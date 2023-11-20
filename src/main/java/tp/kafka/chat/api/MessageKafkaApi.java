@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MessageKafkaApi {
     
-    @KafkaListener(topics = "${topics.incoming.chat}")
+    @KafkaListener(topics = "${topics.chat}")
     public void listen(ConsumerRecord<String, Message> record) {
         var channel = record.value().getChannel();
         var nick = record.value().getSender().getNick();
