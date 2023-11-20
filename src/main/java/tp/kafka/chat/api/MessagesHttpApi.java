@@ -29,7 +29,7 @@ public class MessagesHttpApi implements MessagesApiDelegate {
         log.info("sending chatMessage {}", chatMessage);
         var message = messageMapper.toProtobuf(chatMessage);
         var key = message.getChannel();
-        var topic = topicProperties.getOutgoing().getChat();
+        var topic = topicProperties.getChat();
         kafkaTemplate.send(topic, key, message).get(2, TimeUnit.SECONDS);
         return ResponseEntity.accepted().build();
     }

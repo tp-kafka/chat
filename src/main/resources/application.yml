@@ -21,9 +21,7 @@ springdoc:
     url: /openapi/chat.yml
 
 topics:
-  incoming:
-    chat: chat
-  outgoing:
-    chat: chat
-    bad-words: badwords
+  chat: chat
+  filtered-chat: filtered-chat
+  bad-words: badwords
 

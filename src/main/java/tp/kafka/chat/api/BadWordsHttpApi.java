@@ -34,12 +34,12 @@ public class BadWordsHttpApi implements BadwordsApiDelegate {
     final KafkaTemplate<String, BadWord> kafkaTemplate;
     final TopicProperties topicProperties;
     final StreamsBuilderFactoryBean  streamsBuilder;
-    final GlobalKTable<String, BadWord> badWordSource;
+    final GlobalKTable<String, BadWord> badWordGlobalTable;
 
     @Override
     @SneakyThrows
     public ResponseEntity<Void> createBadWord(CreateBadWord createBadWord) {
-        var topic = topicProperties.getOutgoing().getBadWords();
+        var topic = topicProperties.getBadWords();
         var results = StreamEx.of(createBadWord.getWordlist())
             .peek(word -> log.info("creating bad word {}", word))
             .map(word -> BadWord.newBuilder().setWord(word).build())
@@ -53,7 +53,7 @@ public class BadWordsHttpApi implements BadwordsApiDelegate {
     @Override
     @SneakyThrows
     public ResponseEntity<Void> deleteBadWord(DeleteBadWord deleteBadWord) {
-        var topic = topicProperties.getOutgoing().getBadWords();
+        var topic = topicProperties.getBadWords();
         var results = StreamEx.of(deleteBadWord.getWordlist())
             .peek(word -> log.info("deleting bad word {}", word))
             .map(word -> BadWord.newBuilder().setWord(word).build())
@@ -66,7 +66,7 @@ public class BadWordsHttpApi implements BadwordsApiDelegate {
 
     @Override
     public ResponseEntity<ReadBadWord> readBadWord() {
-        var table = streamsBuilder.getKafkaStreams().store(StoreQueryParameters.fromNameAndType(badWordSource.queryableStoreName(), QueryableStoreTypes.keyValueStore()));
+        var table = streamsBuilder.getKafkaStreams().store(StoreQueryParameters.fromNameAndType(badWordGlobalTable.queryableStoreName(), QueryableStoreTypes.keyValueStore()));
         var badWordList = StreamEx.of(table.all())
             .map(kv -> (BadWord)kv.value)
             .map(word -> word.getWord())

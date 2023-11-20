@@ -102,4 +102,7 @@ services:
       - kafka0
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
                cub kafka-ready -b localhost:29092 1 60 && \
-               kafka-topics --create --topic chat --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092'"
+               kafka-topics --create --topic chat --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092 &&
+               kafka-topics --create --topic filtered-chat --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092 &&
+               kafka-topics --create --topic badwords --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092 &&
+               '"

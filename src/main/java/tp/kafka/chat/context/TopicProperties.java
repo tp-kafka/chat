@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Component
@@ -14,23 +13,11 @@ import lombok.Data;
 @Validated
 public class TopicProperties {
 
-    @Data
-    public static final class Incoming {
         @NotEmpty
         String chat;
-    }
-
-    @Data
-    public static final class Outgoing {
         @NotEmpty
-        String chat;
+        String filteredChat;
         @NotEmpty
         String badWords;
-    }
 
-    @NotNull
-    Incoming incoming;
-
-    @NotNull
-    Outgoing outgoing;
 }
