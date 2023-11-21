@@ -3,9 +3,7 @@ package tp.kafka.chat.api;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StoreQueryParameters;
-import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.GlobalKTable;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.springframework.http.ResponseEntity;
@@ -13,19 +11,19 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import one.util.streamex.StreamEx;
+import tp.kafka.chat.api.BadWordEvent.BadWord;
 import tp.kafka.chat.api.model.CreateBadWord;
 import tp.kafka.chat.api.model.DeleteBadWord;
 import tp.kafka.chat.api.model.ReadBadWord;
 import tp.kafka.chat.context.TopicProperties;
-import tp.kafka.chat.api.BadWordEvent.BadWord;
 
 /**
- * BadWordsHttpApi
+ * Http-Service class for managing bad words using Kafka Streams.
+ * This class provides endpoints to create, delete, and read bad words stored in a Kafka topic.
  */
 @Service
 @RequiredArgsConstructor

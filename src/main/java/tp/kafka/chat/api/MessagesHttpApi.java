@@ -14,6 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import tp.kafka.chat.api.model.ChatMessage;
 import tp.kafka.chat.context.TopicProperties;
 
+/**
+ * Http-Service class for sending chat messages using Kafka Streams.
+ * This class provides http-endpoints to create, delete, and read bad words stored in a Kafka topic.
+ */
 @RequiredArgsConstructor
 @Service
 @Slf4j
