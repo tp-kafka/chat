@@ -16,4 +16,6 @@ message Message {
     string login = 2;
     string hostname = 3;
   }
+
+  optional bool mod_only = 5;
 }

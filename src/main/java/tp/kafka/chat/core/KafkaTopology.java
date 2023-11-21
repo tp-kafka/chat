@@ -13,10 +13,12 @@ import org.apache.kafka.streams.StoreQueryParameters;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.GlobalKTable;
+import org.apache.kafka.streams.kstream.Joined;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.KeyValueMapper;
 import org.apache.kafka.streams.kstream.Materialized;
+import org.apache.kafka.streams.kstream.Repartitioned;
 import org.apache.kafka.streams.processor.api.ProcessorSupplier;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
@@ -79,12 +81,26 @@ public class KafkaTopology {
     }
 
     @Bean
-    KStream<String, Timeout> timeoutStream(KStream<String, Message> messageSourceStream, GlobalKTable<String, BadWord> badWordGlobalTable, StreamsBuilderFactoryBean  streamsBuilder){
+    KTable<String, Timeout> timeoutTable(KStream<String, Message> messageSourceStream, GlobalKTable<String, BadWord> badWordGlobalTable){
         var storeBuilder = Stores.keyValueStoreBuilder(
             Stores.persistentKeyValueStore("timeoutTable"),
             stringSerde, timeoutSerde);
         builder.addStateStore(storeBuilder);
-        return messageSourceStream.process(() -> new TimeoutProcessor(badWordGlobalTable.queryableStoreName()), "timeoutTable");
+        return messageSourceStream.process(() -> new TimeoutProcessor(badWordGlobalTable.queryableStoreName()), "timeoutTable")
+            .toTable(Materialized.with(stringSerde, timeoutSerde));
     }
 
+    @Bean 
+    KStream<String, Message> filteredMessageStream(KStream<String, Message> messageSourceStream, KTable<String, Timeout> timeoutTable){
+        return messageSourceStream
+            .selectKey((k,v) -> v.getSender().getLogin())
+            .repartition(Repartitioned.with(stringSerde, messageSerde));
+           // .leftJoin(timeoutTable, this::joiner, Joined.with(stringSerde, messageSerde, timeoutSerde));
+    }
+
+    private Message joiner(Message message, Timeout timeout) {
+        return message.toBuilder()
+            .setModOnly(timeout != null)
+            .build();
+    }
 }

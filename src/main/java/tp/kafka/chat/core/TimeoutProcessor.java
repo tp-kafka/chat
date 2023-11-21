@@ -2,6 +2,7 @@ package tp.kafka.chat.core;
 
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
+import org.apache.kafka.streams.state.TimestampedKeyValueStore;
 import org.mapstruct.factory.Mappers;
 
 import com.github.cjmatta.kafka.connect.irc.MessageEvent.Message;
@@ -26,7 +27,7 @@ import org.apache.kafka.streams.state.ValueAndTimestamp;
 @RequiredArgsConstructor
 public class TimeoutProcessor implements Processor<String, Message, String, Timeout>, Punctuator{
     final String badWordTableName;
-    ReadOnlyKeyValueStore<String, BadWord> badWordTable;
+    TimestampedKeyValueStore<String, BadWord> badWordTable;
     KeyValueStore<String, Timeout> timeoutTable;
     ProcessorContext<String, Timeout> context;
     TimeoutMapper mapper = Mappers.getMapper(TimeoutMapper.class);
@@ -35,9 +36,9 @@ public class TimeoutProcessor implements Processor<String, Message, String, Time
     public void init(ProcessorContext<String, Timeout> context) {
         Processor.super.init(context);
         this.context = context;
-        this.badWordTable = (ReadOnlyKeyValueStore<String, BadWord>) context.getStateStore(badWordTableName);
+        this.badWordTable = (TimestampedKeyValueStore<String, BadWord>) context.getStateStore(badWordTableName);
         this.timeoutTable = (KeyValueStore<String, Timeout>) context.getStateStore("timeoutTable");
-        context.schedule(Duration.ofSeconds(10), PunctuationType.STREAM_TIME, this);
+        context.schedule(Duration.ofSeconds(10), PunctuationType.WALL_CLOCK_TIME, this);
     }
 
     @Override
@@ -49,29 +50,30 @@ public class TimeoutProcessor implements Processor<String, Message, String, Time
                 .withValue(mapper.createTimeout(msg));
             timeoutTable.put(newRecord.key(), newRecord.value());
             context.forward(newRecord);
+            log.info("{} was timed out until {}", newRecord.value().getLogin(), newRecord.value().getUntil());
         }
     }
 
     protected boolean containsBadWord(Message message){
         return StreamEx.of(badWordTable.all())
-            .map(kv -> (ValueAndTimestamp)kv.value)
-            .map(vt -> vt.)
-            .peek(badWord -> log.info("checking {} for {}", message.getMessage(), badWord))
+            .map(kv -> kv.value)
+            .map(vt -> vt.value())
+            .peek(badWord -> log.debug("checking {} for {}", message.getMessage(), badWord))
             .anyMatch(badWord -> message.getMessage().contains(badWord.getWord()));
     }
 
     @Override
     public void punctuate(long timestamp) {
-        log.info("clearing expired timeouts");
+        log.debug("clearing expired timeouts");
         var now = Instant.ofEpochMilli(timestamp);
         timeoutTable.all().forEachRemaining( entry -> {
-            var expired = mapper.parse(entry.value.getUntil()).isAfter(now);
+            var expiry = mapper.parse(entry.value.getUntil());
+            var expired = now.isAfter(expiry);
             if(expired){
-                log.info("timeout for {} is expired.", entry.key);
+                log.info("timeout for {} is expired. (now ({}) is after {}) ", entry.key, now, expiry);
                 timeoutTable.delete(entry.key);
                 context.forward(new Record<String, Timeout>(entry.key, null, timestamp));
             }
         });
-
     }
 }
