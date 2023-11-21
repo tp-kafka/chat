@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.github.cjmatta.kafka.connect.irc.MessageEvent.Message;
 import com.google.protobuf.util.JsonFormat;
@@ -21,6 +20,10 @@ import com.google.protobuf.util.JsonFormat;
 import lombok.SneakyThrows;
 import tp.kafka.chat.api.BadWordEvent.BadWord;
 
+/**
+ * Test class for Kafka Topology.
+ * It provides unit testing for various scenarios involving Kafka Streams processing.
+ */
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SoftAssertionsExtension.class)
@@ -46,8 +49,8 @@ public class KafkaTopologyTest {
         // assert
         softly.assertThat(messageOutput.getQueueSize()).isEqualTo(1);
         softly.assertThat(messageOutput.readValue())
-            .hasChannel(okMessage.getChannel())
-            .hasMessage(okMessage.getMessage());
+                .hasChannel(okMessage.getChannel())
+                .hasMessage(okMessage.getMessage());
     }
 
     @Test
@@ -81,6 +84,15 @@ public class KafkaTopologyTest {
         softly.assertThat(messageOutput.getQueueSize()).isEqualTo(0);
     }
 
+    /**
+     * Loads a JSON file into a protobuf message builder.
+     * This method is used to load test data from a JSON file.
+     *
+     * @param file The file name of the JSON file to load.
+     * @param builder The protobuf message builder to load data into.
+     * @param <T> The type of the protobuf message builder.
+     * @throws Exception if any IO or parsing errors occur.
+     */
     @SneakyThrows
     <T extends com.google.protobuf.GeneratedMessageV3.Builder<?>> void loadJson(String file, T builder) {
         var resource = KafkaTopologyTest.class.getResource("/data/" + file);

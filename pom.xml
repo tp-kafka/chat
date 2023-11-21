@@ -214,6 +214,18 @@
 							</sources>
 						</configuration>
 					</execution>
+						<execution>
+						  <id>add-test-source</id>
+						  <phase>generate-test-sources</phase>
+						  <goals>
+							<goal>add-test-source</goal>
+						  </goals>
+						  <configuration>
+							<sources>
+							  <source>${project.basedir}/target/generated-test-sources/assertj-assertions</source>
+							</sources>
+						  </configuration>
+						</execution>
 				</executions>
 			</plugin>
 			<plugin>
