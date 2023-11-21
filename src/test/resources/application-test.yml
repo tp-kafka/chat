@@ -1,0 +1,6 @@
+spring:
+  kafka:
+    streams:
+      application-id: unit-test-${random.uuid}
+    properties:
+      "schema.registry.url": mock://localhost:8085

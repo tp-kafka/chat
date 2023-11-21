@@ -1,0 +1,10 @@
+{
+	"createdat": "2020-01-01T18:47:51.806731997Z",
+	"channel": "#test",
+	"sender": {
+		"nick": "user",
+		"login": "user",
+		"hostname": "localhost"
+	},
+	"message": "filtered"
+}

@@ -1,0 +1,1 @@
+org.springframework.test.context.TestExecutionListener=tp.kafka.chat.core.context.TopologyTestListener
