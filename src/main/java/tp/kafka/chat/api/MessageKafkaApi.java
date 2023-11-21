@@ -17,6 +17,7 @@ public class MessageKafkaApi {
         var channel = record.value().getChannel();
         var nick = record.value().getSender().getNick();
         var message = record.value().getMessage();
+        
         log.info("[{}] received message: ({}) {}", channel, nick, message);
     }
 

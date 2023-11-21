@@ -12,6 +12,7 @@ import com.github.cjmatta.kafka.connect.irc.MessageEvent.Message;
 
 import io.confluent.kafka.streams.serdes.protobuf.KafkaProtobufSerde;
 import tp.kafka.chat.api.BadWordEvent.BadWord;
+import tp.kafka.chat.api.TimeoutEvent.Timeout;
 
 @Configuration
 public class Serde {
@@ -35,6 +36,15 @@ public class Serde {
         var serdeConfig = new HashMap<String, Object>();
         config.asProperties().entrySet().forEach(e -> serdeConfig.put((String)e.getKey(), e.getValue()));
         var protobufSerde = new KafkaProtobufSerde<>(Message.class);
+        protobufSerde.configure(serdeConfig, false);
+        return protobufSerde;
+    }
+
+    @Bean
+    KafkaProtobufSerde<Timeout> timeoutSerde(KafkaStreamsConfiguration config){
+        var serdeConfig = new HashMap<String, Object>();
+        config.asProperties().entrySet().forEach(e -> serdeConfig.put((String)e.getKey(), e.getValue()));
+        var protobufSerde = new KafkaProtobufSerde<>(Timeout.class);
         protobufSerde.configure(serdeConfig, false);
         return protobufSerde;
     }

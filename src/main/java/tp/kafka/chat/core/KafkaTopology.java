@@ -8,15 +8,21 @@ import org.apache.kafka.common.config.TopicConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.Serdes.StringSerde;
 import org.apache.kafka.common.utils.Bytes;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StoreQueryParameters;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.GlobalKTable;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.KeyValueMapper;
 import org.apache.kafka.streams.kstream.Materialized;
+import org.apache.kafka.streams.processor.api.ProcessorSupplier;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
+import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
+import org.apache.kafka.streams.state.StoreBuilder;
+import org.apache.kafka.streams.state.Stores;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
@@ -32,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 import one.util.streamex.StreamEx;
 import tp.kafka.chat.api.BadWordEvent;
 import tp.kafka.chat.api.BadWordEvent.BadWord;
+import tp.kafka.chat.api.TimeoutEvent.Timeout;
 import tp.kafka.chat.context.TopicProperties;
 
 @Slf4j
@@ -43,42 +50,41 @@ public class KafkaTopology {
     final StringSerde stringSerde;
     final KafkaProtobufSerde<BadWord> badWordSerde;
     final KafkaProtobufSerde<Message> messageSerde;
+    final KafkaProtobufSerde<Timeout> timeoutSerde;
     final TopicProperties topics;
     final StreamsBuilder builder;
+    final TimeoutMapper timeoutMapper;
 
-    @Bean    
+    @Bean
     GlobalKTable<String, BadWord> badWordGlobalTable() {
         var topic = topics.getBadWords();
 
         var consumerConfig = Consumed
-            .with(stringSerde, badWordSerde)
-            .withName("badword-source");
-        
+                .with(stringSerde, badWordSerde)
+                .withName("badword-source");
+
         var materialization = Materialized.<String, BadWord, KeyValueStore<Bytes, byte[]>>as("badword-table");
-            
+
         return builder.globalTable(topic, consumerConfig, materialization);
     }
 
     @Bean
-    KStream<String, Message> messageSourceStream(){
+    KStream<String, Message> messageSourceStream() {
         var topic = topics.getChat();
         var consumerConfig = Consumed
-            .with(stringSerde, messageSerde)
-            .withName("message-source");
+                .with(stringSerde, messageSerde)
+                .withName("message-source");
 
         return builder.stream(topic, consumerConfig);
     }
 
     @Bean
-    KStream<String, Message> filteredMessageStream(KStream<String, Message> messageSourceStream, GlobalKTable<String, BadWord> badWordGlobalTable, StreamsBuilderFactoryBean  streamsBuilder){
-        return messageSourceStream.filter((k,v) -> {
-            var table = streamsBuilder.getKafkaStreams().store(StoreQueryParameters.fromNameAndType(badWordGlobalTable.queryableStoreName(), QueryableStoreTypes.keyValueStore()));
-            return StreamEx.of(table.all())
-                .map(kv -> (BadWord)kv.value)
-                .peek(badWord -> log.info("checking {} for {}", v, badWord))
-                .noneMatch(badWord -> v.getMessage().contains(badWord.getWord()));
-        });
+    KStream<String, Timeout> timeoutStream(KStream<String, Message> messageSourceStream, GlobalKTable<String, BadWord> badWordGlobalTable, StreamsBuilderFactoryBean  streamsBuilder){
+        var storeBuilder = Stores.keyValueStoreBuilder(
+            Stores.persistentKeyValueStore("timeoutTable"),
+            stringSerde, timeoutSerde);
+        builder.addStateStore(storeBuilder);
+        return messageSourceStream.process(() -> new TimeoutProcessor(badWordGlobalTable.queryableStoreName()), "timeoutTable");
     }
-
 
 }

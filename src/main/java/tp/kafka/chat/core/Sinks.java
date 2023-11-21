@@ -7,6 +7,7 @@ import com.github.cjmatta.kafka.connect.irc.MessageEvent.Message;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import tp.kafka.chat.api.TimeoutEvent.Timeout;
 import tp.kafka.chat.context.TopicProperties;
 
 @Component

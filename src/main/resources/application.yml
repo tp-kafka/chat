@@ -1,18 +1,19 @@
 server:
   port: 9000
 spring:
-  application:
-    name: Chat Application
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer
     consumer:
-      group-id: chat-application
+      group-id: chat-app
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer
       properties:
         "specific.protobuf.value.type": com.github.cjmatta.kafka.connect.irc.MessageEvent$Message
+    streams:
+      application-id: chat-stream
+          
     properties:
       "schema.registry.url": http://localhost:8085
 
@@ -24,4 +25,5 @@ topics:
   chat: chat
   filtered-chat: filtered-chat
   bad-words: badwords
+  timeouts: timeouts
 

@@ -19,5 +19,7 @@ public class TopicProperties {
         String filteredChat;
         @NotEmpty
         String badWords;
+        @NotEmpty
+        String timeouts;
 
 }

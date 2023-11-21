@@ -104,4 +104,5 @@ services:
                cub kafka-ready -b localhost:29092 1 60 && \
                kafka-topics --create --topic chat --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092 &&
                kafka-topics --create --topic filtered-chat --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092 &&
+               kafka-topics --create --topic timeouts --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092 &&
                kafka-topics --create --topic badwords --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server localhost:29092'"
