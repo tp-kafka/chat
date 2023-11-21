@@ -13,7 +13,11 @@ spring:
         "specific.protobuf.value.type": com.github.cjmatta.kafka.connect.irc.MessageEvent$Message
     streams:
       application-id: chat-stream
-          
+      cleanup:
+        on-startup: true  
+      state-store-cache-max-size: 0      
+      properties:
+        "processing.guarantee": exactly_once_v2   
     properties:
       "schema.registry.url": http://localhost:8085
 

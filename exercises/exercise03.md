@@ -29,7 +29,8 @@
   - Assign a consumer name, e.g., "badword-source".
 - Construct a global table:
   - Use the specified topic, your consumer configuration, and the given materialization parameters.
-- what happens if you do not define a global (but a normal) table
+- what happens with the state when you restart you spring-boot app?
+- what happens when you do not define a global (but a normal) table?
 
 ### Verifying the Table Contents
 - Use the read endpoint to inspect the contents of your table.

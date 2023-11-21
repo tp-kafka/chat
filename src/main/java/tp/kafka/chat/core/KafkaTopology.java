@@ -43,7 +43,6 @@ import tp.kafka.chat.api.BadWordEvent.BadWord;
 import tp.kafka.chat.api.TimeoutEvent.Timeout;
 import tp.kafka.chat.context.TopicProperties;
 
-@Slf4j
 @Configuration
 @EnableKafkaStreams
 @RequiredArgsConstructor
@@ -91,11 +90,19 @@ public class KafkaTopology {
     }
 
     @Bean 
-    KStream<String, Message> filteredMessageStream(KStream<String, Message> messageSourceStream, KTable<String, Timeout> timeoutTable){
+    KStream<String, Message> modMessageStream(KStream<String, Message> messageSourceStream, KTable<String, Timeout> timeoutTable){
         return messageSourceStream
             .selectKey((k,v) -> v.getSender().getLogin())
+            .repartition(Repartitioned.with(stringSerde, messageSerde))
+            .leftJoin(timeoutTable, this::joiner, Joined.with(stringSerde, messageSerde, timeoutSerde))
+            .selectKey((k,v) -> v.getChannel())
             .repartition(Repartitioned.with(stringSerde, messageSerde));
-           // .leftJoin(timeoutTable, this::joiner, Joined.with(stringSerde, messageSerde, timeoutSerde));
+    }
+
+
+    @Bean 
+    KStream<String, Message> filteredMessageStream(KStream<String, Message> modMessageStream){
+        return modMessageStream.filterNot((k,v) -> v.getModOnly());
     }
 
     private Message joiner(Message message, Timeout timeout) {
