@@ -29,7 +29,8 @@ Follow these steps to start a GitHub Codespace with this repository:
 3. Click on "Code": In the upper-right corner of the repository page, click on the "Code" button.
 4. Select "Open with Codespaces": From the dropdown menu, select "Open with Codespaces."
 5. Wait for Codespace to Launch: GitHub will set up a Codespace for you with all the necessary tools and configurations. This may take a few moments.
-6. Access Your Codespace: Once the Codespace is ready, you can access it right in your browser. You'll have a fully functional development environment, including a terminal, code editor, and all the dependencies required for the Chat application.
+6. In the explorer pane choose "Java Projects" and import the project.
+7. Once the Codespace is ready, you can access it right in your browser. You'll have a fully functional development environment, including a terminal, code editor, and all the dependencies required for the Chat application.
 
 That's it! You're now ready to start working on the Chat application and the Kafka training exercises directly from your GitHub Codespace. No additional setup is required, and you can focus on learning and coding without the hassle of configuring your local environment.
 
@@ -54,13 +55,14 @@ To start the Chat Application, you can use the Spring Boot Dashboard in your IDE
 2. In the Spring Boot Dashboard, you should see the Chat Application listed as a project. Click on it.
 3. Click the "Run" button to launch the Chat Application.
 
-#### Open Swagger UI
+##### Open Swagger UI
 
-To access the [Swagger UI](https://swagger.io/tools/swagger-ui/) for the Chat Application, follow these steps:
+[Swagger UI](https://swagger.io/tools/swagger-ui/) is mapped to the root path of the application. To access it, follow these steps:
 
-1. Open the 'src/main/api/chat.yml' file in your GitHub Codespace
-2. Once the YAML file is open, press 'Ctrl+P' and type "swagger"
-3. Click on the "OpenAPI: show preview using swagger" option.
+1. In your GitHub Codespace, open the "Ports" view by clicking the tab.
+2. Look for labeled 'Spring Boot App (9000)' and click on the 'Open in Browser' symbol, that appears in the column 'Forwarded Address' when you hover the line
+
+A new tab should open in your browser. You can use all available http endpoints from here.
 
 ## Exercises
 
