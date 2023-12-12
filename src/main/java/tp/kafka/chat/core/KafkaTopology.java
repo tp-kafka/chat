@@ -100,12 +100,11 @@ public class KafkaTopology {
      */
     @Bean 
     KStream<String, Message> modMessageStream(KStream<String, Message> messageSourceStream, KTable<String, Timeout> timeoutTable){
-        return messageSourceStream
-            .selectKey((k,v) -> v.getSender().getLogin())
-            .repartition(Repartitioned.with(stringSerde, messageSerde))
-            .leftJoin(timeoutTable, this::joiner, Joined.with(stringSerde, messageSerde, timeoutSerde))
-            .selectKey((k,v) -> v.getChannel())
-            .repartition(Repartitioned.with(stringSerde, messageSerde));
+        return null; //TODO: Begin with the `messageSourceStream`
+        // Select the login of the sender as the new key
+        // Repartition the stream using `stringSerde` and `messageSerde`.
+        // Left-Join with `timeoutTable`
+        // Repartition Back to Channel-Name
     }
 
 
@@ -117,7 +116,7 @@ public class KafkaTopology {
      */
     @Bean 
     KStream<String, Message> filteredMessageStream(KStream<String, Message> modMessageStream){
-        return modMessageStream.filterNot((k,v) -> v.getModOnly());
+        return modMessageStream ;//TODO: apply filter here 
     }
 
     private Message joiner(Message message, Timeout timeout) {
