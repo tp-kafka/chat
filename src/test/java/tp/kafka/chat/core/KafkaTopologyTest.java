@@ -44,13 +44,11 @@ public class KafkaTopologyTest {
         loadJson("chatMessage.ok.json", okMessage);
 
         // act
-        messageInput.pipeInput(okMessage.getChannel(), okMessage.build());
+        //TODO: use messageInput to pipe in okMessage
 
         // assert
         softly.assertThat(messageOutput.getQueueSize()).isEqualTo(1);
-        softly.assertThat(messageOutput.readValue())
-                .hasChannel(okMessage.getChannel())
-                .hasMessage(okMessage.getMessage());
+        //TODO: check value of message output
     }
 
     @Test
@@ -64,7 +62,7 @@ public class KafkaTopologyTest {
         messageInput.pipeInput(forbiddenMessage.getChannel(), forbiddenMessage.build());
 
         // assert
-        softly.assertThat(messageOutput.getQueueSize()).isEqualTo(0);
+        //TODO: check message was filtered
     }
 
     @Test
@@ -81,7 +79,7 @@ public class KafkaTopologyTest {
         messageInput.pipeInput(okMessage.getChannel(), okMessage.build());
 
         // assert
-        softly.assertThat(messageOutput.getQueueSize()).isEqualTo(0);
+        //TODO: check message was filtered
     }
 
     /**
