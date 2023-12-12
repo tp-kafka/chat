@@ -1,8 +1,0 @@
-summary: "Create some bad words"
-description: Create some bad words in your application for testing.
-value: |
-  {
-    "wordlist": [
-      "test", "kafka", "💩"
-    ]
-  }

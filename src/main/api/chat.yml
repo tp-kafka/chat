@@ -26,72 +26,8 @@ paths:
           description: The event does not match the schema.
         500:
           description: Internal server error during processing.
-  /badwords:
-    post:
-      operationId: CreateBadWord
-      summary: Register a new word as bad
-      description: This endpoint allows you to create a bad word, wich will be used to filter messages, in the application
-      tags:
-        - badwords
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateBadWord"
-            examples:
-              Create Default Words:
-                $ref: examples/bad_word.yml
-      responses:
-        200:
-          description: The event was accepted (additional elements or attributes will be ignored).
-        400:
-          description: The event does not match the schema.
-        500:
-          description: Internal server error during processing.
-    delete:
-      operationId: DeleteBadWord
-      summary: Delete a word from the bad word list
-      description: This endpoint allows you to delete a bad word, wich will be used to filter messages, in the application
-      tags:
-        - badwords
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/DeleteBadWord"
-            examples:
-              Delete Default Words:
-                $ref: examples/bad_word.yml
-      responses:
-        200:
-          description: The event was accepted (additional elements or attributes will be ignored).
-        400:
-          description: The event does not match the schema.
-        500:
-          description: Internal server error during processing.
-    get:
-      operationId: ReadBadWord
-      summary: Read the bad word list
-      description: This endpoint allows you to read the bad word list, wich will be used to filter messages in the application
-      tags:
-        - badwords
-      responses:
-        200:
-          description: The word list
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ReadBadWord"
-        500:
-          description: Internal server error during processing.
 
 components:
   schemas:
     ChatMessage:
       $ref: schemas/ChatMessage.yml
-    CreateBadWord:
-      $ref: schemas/CreateBadWord.yml
-    DeleteBadWord:
-      $ref: schemas/DeleteBadWord.yml
-    ReadBadWord:
-      $ref: schemas/ReadBadWord.yml
