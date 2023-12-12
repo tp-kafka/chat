@@ -11,6 +11,7 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,8 @@ import tp.kafka.chat.context.TopicProperties;
 public class BadWordsHttpApi implements BadwordsApiDelegate {
     final KafkaTemplate<String, BadWord> kafkaTemplate;
     final TopicProperties topicProperties;
-    final StreamsBuilderFactoryBean  streamsBuilder;
-    final GlobalKTable<String, BadWord> badWordGlobalTable;
+    @Nullable final StreamsBuilderFactoryBean  streamsBuilder;
+    @Nullable final GlobalKTable<String, BadWord> badWordGlobalTable;
 
     @Override
     @SneakyThrows
