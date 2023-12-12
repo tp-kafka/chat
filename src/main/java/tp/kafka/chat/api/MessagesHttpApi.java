@@ -34,7 +34,10 @@ public class MessagesHttpApi implements MessagesApiDelegate {
         var message = messageMapper.toProtobuf(chatMessage);
         var key = message.getChannel();
         var topic = topicProperties.getChat();
-        kafkaTemplate.send(topic, key, message).get(2, TimeUnit.SECONDS);
+        
+        //TODO: use kafkaTemplate to send message with key to topic
+        //see: https://docs.spring.io/spring-kafka/api/org/springframework/kafka/core/KafkaTemplate.html#send(java.lang.String,K,V)
+
         return ResponseEntity.accepted().build();
     }
 }

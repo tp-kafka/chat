@@ -32,12 +32,12 @@
 
 1. In `tp.kafka.chat.api.MessageKafkaApi`:
    - Apply the `KafkaListener` annotation to consume the topic defined in `topics.chat`.
-   - Uncomment the log message and extract values from the Kafka record.
+   - Extract values from the Kafka record in order to log a message that makes sense.
    - Discuss why this setup doesn't guarantee "read exactly once" and propose a solution for exactly once delivery.
 
 ### Message Distribution
 
-In this section, attendees will explore how different message keys affect the distribution of messages to partitions in Kafka. This section will provide practical insights into Kafka's partitioning mechanism and its effects on application scalability and reliability. 
+In this section, attendees will explore how different message keys affect the distribution of messages to partitions in Kafka. This section will provide practical insights into Kafka's partitioning mechanism and its effects on application scalability and reliability.
 
 - Send messages with varying keys to Kafka.
 - Observe and analyze how different keys influence the distribution across partitions.

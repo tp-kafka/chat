@@ -22,11 +22,12 @@ public class MessageKafkaApi {
      *
      * @param record The Kafka ConsumerRecord containing the message data and metadata.
      */
-    @KafkaListener(topics = "${topics.chat}")
+    //TODO: use KafkaListener Annotation to consume ${topics.chat}
+    //see: https://docs.spring.io/spring-kafka/reference/kafka/receiving-messages/listener-annotation.html
     public void listen(ConsumerRecord<String, Message> record) {
-        var channel = record.value().getChannel();
-        var nick = record.value().getSender().getNick();
-        var message = record.value().getMessage();
+        var channel = "TODO: get the channel from the message";
+        var nick = "TODO: get the senders nick";
+        var message = "TODO: get the message contained in the message";
         
         log.info("[{}] received message: ({}) {}", channel, nick, message);
     }
