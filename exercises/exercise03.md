@@ -15,13 +15,13 @@
 - Review `tp.kafka.chat.api.BadWordsHttpApi`.
   - Note how it's similar to previously implemented APIs.
 
-### Observing Kafka Events
+### Observing Kafka Events (on prep branch)
 - Interact with the `badwords` topic by:
   - Writing one or more words via the api.
   - Deleting one or more words via the api.
 - Observe the events in Kafka during these operations.
 
-### Implementing Global Table in `KafkaTopology`
+### Implementing Global Table in `KafkaTopology` (on exercise branch)
 - In `tp.kafka.chat.core.KafkaTopology`, focus on the `badWordGlobalTable` method.
 - Create a consumer configuration:
   - Utilize the `consumend` class.

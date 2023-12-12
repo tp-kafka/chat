@@ -50,13 +50,16 @@ public class KafkaTopology {
     GlobalKTable<String, BadWord> badWordGlobalTable() {
         var topic = topics.getBadWords();
 
-        var consumerConfig = Consumed
-                .with(stringSerde, badWordSerde)
-                .withName("badword-source");
+        var consumerConfig = (Consumed<String, BadWord>) null; //TODO: use Consumed class
+                // with stringSerde and badWordSerde
+                // and with Name "badword-source"
+                //see: https://kafka.apache.org/25/javadoc/org/apache/kafka/streams/kstream/Consumed.html#with-org.apache.kafka.common.serialization.Serde-org.apache.kafka.common.serialization.Serde-
+                //see: https://kafka.apache.org/25/javadoc/org/apache/kafka/streams/kstream/Consumed.html#withName-java.lang.String-
 
         var materialization = Materialized.<String, BadWord, KeyValueStore<Bytes, byte[]>>as("badword-table");
 
-        return builder.globalTable(topic, consumerConfig, materialization);
+        return null; //TODO: use the builder to create a globalTable using topic, consumerConfig and materialization
+        //see: https://kafka.apache.org/25/javadoc/org/apache/kafka/streams/StreamsBuilder.html#globalTable-java.lang.String-org.apache.kafka.streams.kstream.Consumed-org.apache.kafka.streams.kstream.Materialized-
     }
 
     /**
