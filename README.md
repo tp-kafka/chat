@@ -29,8 +29,9 @@ Follow these steps to start a GitHub Codespace with this repository:
 3. Click on "Code": In the upper-right corner of the repository page, click on the "Code" button.
 4. Select "Open with Codespaces": From the dropdown menu, select "Open with Codespaces."
 5. Wait for Codespace to Launch: GitHub will set up a Codespace for you with all the necessary tools and configurations. This may take a few moments.
-6. In the explorer pane choose "Java Projects" and import the project.
-7. Once the Codespace is ready, you can access it right in your browser. You'll have a fully functional development environment, including a terminal, code editor, and all the dependencies required for the Chat application.
+6. Wait for the postCreateCommand to start and finish: ![PostCreateCommand](postCreateCommand.png)
+7. In the explorer pane choose "Java Projects" and import the project.
+8. Once the Codespace is ready, you can access it right in your browser. You'll have a fully functional development environment, including a terminal, code editor, and all the dependencies required for the Chat application.
 
 That's it! You're now ready to start working on the Chat application and the Kafka training exercises directly from your GitHub Codespace. No additional setup is required, and you can focus on learning and coding without the hassle of configuring your local environment.
 
